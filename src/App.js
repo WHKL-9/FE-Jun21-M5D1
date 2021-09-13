@@ -39,8 +39,10 @@ function App() {
           <Navbar.Brand>DayNight Remote</Navbar.Brand>
         </Link>
         <Nav className="mr-auto">
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+<Link to="/Company">
+            <Nav.Link href="#features">Company</Nav.Link>
+
+</Link>           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
         <Form inline>
           <FormControl
@@ -81,7 +83,7 @@ function App() {
           )}
         />
         <Route
-          path="/company/:id"
+          path="/Company/"
           exact
           render={(routerProps) => <Company {...routerProps} />}
         />
