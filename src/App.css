@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.HomePageImage{
+  object-fit: contain;
+  max-width: 50vw;
+  max-height: 50vh;
+}
+

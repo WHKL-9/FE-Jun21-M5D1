@@ -42,7 +42,6 @@ function App() {
           <Link to="/Company">
             <Nav.Link href="#features">Company</Nav.Link>
           </Link>{" "}
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
         <Form inline>
           <FormControl

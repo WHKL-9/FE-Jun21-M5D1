@@ -12,8 +12,3 @@ code {
     monospace;
 }
 
-.HomePageImage{
-  object-fit: contain;
-  max-width: 50vw;
-  max-height: 50vh;
-}
