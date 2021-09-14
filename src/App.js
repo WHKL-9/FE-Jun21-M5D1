@@ -1,6 +1,12 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import { Nav, Navbar, Button, Form, FormControl } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import HomePage from "./HomePage";
@@ -11,26 +17,24 @@ function App() {
   const [userInput, setUserInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const endpoint = "https://remotive.io/api/remote-jobs?search=";
+  const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?title=";
 
-  const handleSearchInput = async () => {
+  const handleSearchInput = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch(
-        endpoint + userInput,
-        console.log(endpoint + userInput)
-      );
+      const response = await fetch(endpoint + userInput);
       if (response.ok) {
         const data = await response.json();
-        setSearchResults(data.jobs, console.log(data.jobs));
+        setSearchResults(data.data);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    handleSearchInput();
-  }, []);
+  // useEffect(() => {
+  //   handleSearchInput();
+  // }, []);
 
   return (
     <Router>
@@ -43,23 +47,17 @@ function App() {
             <Nav.Link href="#features">Company</Nav.Link>
           </Link>{" "}
         </Nav>
-        <Form inline>
+        <Form onSubmit={handleSearchInput}>
           <FormControl
             type="text"
-            placeholder="Search"
+            placeholder="Tell us your dream job"
             className="mr-sm-2"
             onChange={(e) =>
               setUserInput(e.target.value, console.log(userInput))
             }
           />
           <Link to={`/jobs/${userInput}`}>
-            <Button
-              variant="outline-primary"
-              type="button"
-              onClick={handleSearchInput}
-            >
-              Search
-            </Button>
+            <Button variant="outline-primary">Search</Button>
           </Link>
         </Form>
       </Navbar>
@@ -81,6 +79,9 @@ function App() {
             />
           )}
         />
+        <Route exact path="/">
+          {<Redirect to="/HomePage" />}
+        </Route>
         <Route
           path="/Company/"
           exact
