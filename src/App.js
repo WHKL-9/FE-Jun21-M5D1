@@ -9,24 +9,26 @@ import {
 } from "react-router-dom";
 import { Nav, Navbar, Button, Form, FormControl } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import HomePage from "./HomePage";
-import Company from "./Company";
-import SearchedJobs from "./SearchedJobs";
+import HomePage from "./components/HomePage";
+import Company from "./components/Company";
+import SearchedJobs from "./components/SearchedJobs";
+import { FavoriteCompany } from "./components/FavoriteCompany";
 
 function App() {
   const [userInput, setUserInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?title=";
+  const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?search=";
 
   const handleSearchInput = async (event) => {
-    if (event){
+    if (event) {
       event.preventDefault();
     }
     try {
       const response = await fetch(endpoint + userInput);
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setSearchResults(data.data);
       }
     } catch (error) {
@@ -34,9 +36,9 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   handleSearchInput();
-  // }, []);
+  useEffect(() => {
+    handleSearchInput();
+  }, []);
 
   return (
     <Router>
@@ -49,7 +51,7 @@ function App() {
             <Nav.Link href="#features">Company</Nav.Link>
           </Link>{" "}
         </Nav>
-        <Form onSubmit={handleSearchInput}>
+        <Form onSubmit={handleSearchInput} className="d-flex flex-row">
           <FormControl
             type="text"
             placeholder="Tell us your dream job"
@@ -85,9 +87,18 @@ function App() {
           {<Redirect to="/HomePage" />}
         </Route>
         <Route
-          path="/Company/"
+          path="/Company"
           exact
-          render={(routerProps) => <Company {...routerProps} />}
+          render={(routerProps) => (
+            <Company
+              {...routerProps}
+            />
+          )}
+        />
+        <Route
+          path="/FavoriteCompany"
+          exact
+          render={(routerProps) => <FavoriteCompany {...routerProps} />}
         />
       </Switch>
     </Router>

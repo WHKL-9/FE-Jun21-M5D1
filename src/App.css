@@ -43,3 +43,21 @@
   max-height: 50vh;
 }
 
+.NotFavorite{
+  opacity: 0.1;
+  text-align: center;
+  cursor: pointer
+}
+
+.Favorite:hover{
+  transform: scale(1.5)
+}
+
+.Favorite{
+  opacity: 1;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+

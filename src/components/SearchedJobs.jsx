@@ -2,7 +2,7 @@ import { Table, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SearchJobs = ({ searchResults, userInput }) => {
-  console.log("I am the results:", searchResults);
+  // console.log("I am the results:", searchResults);
 
   return (
     <Container fluid className="p-3">

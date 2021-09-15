@@ -9,10 +9,13 @@ import {
   Col,
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import CompanyResult from "./CompanyResult";
 
 const Company = () => {
   const [searchedCompany, setSearchedCompany] = useState("");
   const [companyResult, setCompanyResult] = useState([]);
+    const [selectedCompany, setSelectedCompany] = useState(null);
+
 
   const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?company=";
 
@@ -20,15 +23,17 @@ const Company = () => {
     if (event) {
       event.preventDefault();
     }
-    try {
-      const response = await fetch(endpoint + searchedCompany);
-      if (response.ok) {
-        const data = await response.json();
-        setCompanyResult(data);
-        console.log(data);
+    if (searchedCompany.length > 3) {
+      try {
+        const response = await fetch(endpoint + searchedCompany);
+        if (response.ok) {
+          const data = await response.json();
+          setCompanyResult(data.data);
+          console.log(data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -41,7 +46,7 @@ const Company = () => {
       <Row>
         <Col xs={12} sm={8} md={4}></Col>
         <Col xs={12} sm={8} md={4}>
-          <Form onSubmit={handleSubmit()}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicPassword">
               <Form.Control
                 type="text"
@@ -63,7 +68,11 @@ const Company = () => {
         <Col xs={12} sm={8} md={4}></Col>
       </Row>
       <Row>
-        <CompanyResult companyResult={companyResult} />
+        <CompanyResult
+          companyResult={companyResult}
+          selectedCompany={selectedCompany}
+          setSelectedCompany={setSelectedCompany}
+        />
       </Row>
     </Container>
   );
