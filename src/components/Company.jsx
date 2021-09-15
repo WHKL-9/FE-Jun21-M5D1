@@ -1,21 +1,11 @@
-import {
-  InputGroup,
-  FormControl,
-  Form,
-  Button,
-  Link,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import CompanyResult from "./CompanyResult";
 
 const Company = () => {
   const [searchedCompany, setSearchedCompany] = useState("");
   const [companyResult, setCompanyResult] = useState([]);
-    const [selectedCompany, setSelectedCompany] = useState(null);
-
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
   const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?company=";
 
@@ -29,7 +19,7 @@ const Company = () => {
         if (response.ok) {
           const data = await response.json();
           setCompanyResult(data.data);
-          console.log(data);
+          // console.log(data);
         }
       } catch (error) {
         console.log(error);

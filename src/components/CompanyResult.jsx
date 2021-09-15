@@ -1,7 +1,5 @@
 import { Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "../App.css";
-import { useState,useEffect} from "react";
 import { connect } from "react-redux";
 import { addCompanyToFavorite } from "../actions";
 
@@ -11,10 +9,17 @@ const mapDispatchToProps = (dispatch) => ({
   addToFavorite: (companyToAdd) => dispatch(addCompanyToFavorite(companyToAdd)),
 });
 
-const CompanyResult = ({ companyResult, selectedCompany, setSelectedCompany, addToFavorite, favorite, ...restProps }) => {
+const CompanyResult = ({
+  companyResult,
+  selectedCompany,
+  setSelectedCompany,
+  addToFavorite,
+  favorite,
+  ...restProps
+}) => {
   console.log("I am the results:", companyResult);
 
-console.log({restProps})
+  console.log({ restProps });
 
   return (
     <Table striped bordered hover variant="dark" className="mt-5">
@@ -28,16 +33,23 @@ console.log({restProps})
       </thead>
       <tbody>
         {companyResult.slice(-25).map((result, index) => {
-          const isFavorite = favorite.companies.includes(result._id)
+          let isFavorite = favorite.companies.includes(result._id);
           return (
             <tr key={index + 1}>
               <td>{index + 1}</td>
-              <td style={{color:isFavorite? "red": "white"}}>{result.company_name}</td>
+              <td style={{ color: isFavorite ? "red" : "white" }}>
+                {result.company_name}
+              </td>
               <td>{result.title}</td>
               <td>
-                <Button className="Favorite ml-3" variant="light" onClick={()=>addToFavorite(result._id)}>🌟</Button>
+                <Button
+                  className="Favorite ml-3"
+                  variant="light"
+                  onClick={() => addToFavorite(result._id)} 
+                >
+                  🌟
+                </Button>
               </td>
-     
             </tr>
           );
         })}

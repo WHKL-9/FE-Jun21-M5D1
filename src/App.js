@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import HomePage from "./components/HomePage";
 import Company from "./components/Company";
 import SearchedJobs from "./components/SearchedJobs";
-import { FavoriteCompany } from "./components/FavoriteCompany";
+import  FavoriteCompany  from "./components/FavoriteCompany";
 
 function App() {
   const [userInput, setUserInput] = useState("");

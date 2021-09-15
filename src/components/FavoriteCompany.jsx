@@ -1,9 +1,21 @@
-import { Table, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import {connect} from "react-redux"
 
-export const FavoriteCompany = () => {
+const mapStateToProps = state =>({
+    companies: state.favorite.companies
+})
+
+ const FavoriteCompany = ({companies}) => {
+    
+console.log(companies)
   return (
     <Container fluid className="p-3">
-      <Table>
+        test
+        {companies.map((company, i)=>(
+            <p key={i}>{company._id}</p>
+        ))}
+
+      {/* <Table>
         <thead>
           <tr>
             <th>#</th>
@@ -12,7 +24,10 @@ export const FavoriteCompany = () => {
             <th ><span className="Favorite mx-auto text-center">🌟</span></th>
           </tr>
         </thead>
-      </Table>
+      </Table> */}
+
     </Container>
   );
 };
+
+export default connect(mapStateToProps)(FavoriteCompany);
