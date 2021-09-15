@@ -20,7 +20,9 @@ function App() {
   const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?title=";
 
   const handleSearchInput = async (event) => {
-    event.preventDefault();
+    if (event){
+      event.preventDefault();
+    }
     try {
       const response = await fetch(endpoint + userInput);
       if (response.ok) {
