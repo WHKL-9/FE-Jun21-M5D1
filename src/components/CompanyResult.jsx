@@ -11,18 +11,10 @@ const mapDispatchToProps = (dispatch) => ({
   addToFavorite: (companyToAdd) => dispatch(addCompanyToFavorite(companyToAdd)),
 });
 
-const CompanyResult = ({ companyResult, selectedCompany, setSelectedCompany }, props) => {
+const CompanyResult = ({ companyResult, selectedCompany, setSelectedCompany, addToFavorite, favorite, ...restProps }) => {
   console.log("I am the results:", companyResult);
 
-  const [favorite, setFavorite] = useState(null);
-
-  // const FavoriteToggle = () => setFavorite(!favorite);
-
-  // useEffect(() => {
-  //   handleSearchInput();
-  // }, []);
-
-  useEffect(()=>{setFavorite(selectedCompany)}, [selectedCompany])
+console.log({restProps})
 
   return (
     <Table striped bordered hover variant="dark" className="mt-5">
@@ -36,13 +28,14 @@ const CompanyResult = ({ companyResult, selectedCompany, setSelectedCompany }, p
       </thead>
       <tbody>
         {companyResult.slice(-25).map((result, index) => {
+          const isFavorite = favorite.companies.includes(result._id)
           return (
             <tr key={index + 1}>
               <td>{index + 1}</td>
-              <td>{result.company_name}</td>
+              <td style={{color:isFavorite? "red": "white"}}>{result.company_name}</td>
               <td>{result.title}</td>
               <td>
-                <Button className="Favorite ml-3" variant="light" onClick={()=>props.addToFavorite(favorite)}>🌟</Button>
+                <Button className="Favorite ml-3" variant="light" onClick={()=>addToFavorite(result._id)}>🌟</Button>
               </td>
      
             </tr>
