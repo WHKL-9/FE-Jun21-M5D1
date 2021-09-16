@@ -1,20 +1,18 @@
 import { Container } from "react-bootstrap";
-import {connect} from "react-redux"
+import { connect } from "react-redux";
 
-const mapStateToProps = state =>({
-    companies: state.favorite.companies
-})
+const mapStateToProps = (state) => ({
+  companies: state.favorite.companies,
+});
 
- const FavoriteCompany = ({companies}) => {
-    
-console.log(companies)
+const FavoriteCompany = ({companies}) => {
+  console.log(companies);
   return (
     <Container fluid className="p-3">
-        test
-        {companies.map((company, i)=>(
-            <p key={i}>{company._id}</p>
-        ))}
-
+      test
+      {companies.map((company, i) => (
+        <p key={i}>{company._id}</p>
+      ))}
       {/* <Table>
         <thead>
           <tr>
@@ -25,7 +23,6 @@ console.log(companies)
           </tr>
         </thead>
       </Table> */}
-
     </Container>
   );
 };

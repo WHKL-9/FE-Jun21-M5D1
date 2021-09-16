@@ -45,6 +45,7 @@ const CompanyResult = ({
                 <Button
                   className="Favorite ml-3"
                   variant="light"
+                  type="button"
                   onClick={() => addToFavorite(result._id)} 
                 >
                   🌟
