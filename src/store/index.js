@@ -1,5 +1,6 @@
-import { createStore } from "redux";
-import mainReducer from "../reducers";
+import { combineReducers, createStore } from "redux";
+import favoriteReducer from "../reducers/favorite";
+
 
 // declaring initial state
 export const initialState = {
@@ -8,8 +9,12 @@ export const initialState = {
   },
 };
 
+const bigReducer = combineReducers({
+  favorite: favoriteReducer
+})
+
 export const configureStore = createStore(
-  mainReducer,
+  bigReducer,
   initialState,
-  process.env.REACT_APP_DEVELOPMENT && window.__REDUX_DEVTOOLS_EXTENSION__()
+ window.__REDUX_DEVTOOLS_EXTENSION__()
 );

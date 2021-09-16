@@ -1,30 +1,49 @@
-import { Container } from "react-bootstrap";
+import { Container, Table, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { BsFillTrashFill } from "react-icons/bs";
+import { removeCompanyFromFavorite } from "../actions";
 
 const mapStateToProps = (state) => ({
   companies: state.favorite.companies,
 });
 
-const FavoriteCompany = ({companies}) => {
+const mapDispatchToProps = (dispatch) => ({
+  removeFromFavorite: (index) => dispatch(removeCompanyFromFavorite(index)),
+});
+
+const FavoriteCompany = ({ companies }) => {
   console.log(companies);
   return (
     <Container fluid className="p-3">
-      test
-      {companies.map((company, i) => (
-        <p key={i}>{company._id}</p>
-      ))}
-      {/* <Table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
             <th>Company</th>
             <th>Title</th>
-            <th ><span className="Favorite mx-auto text-center">🌟</span></th>
+            <th>Favorite 👍</th>
           </tr>
         </thead>
-      </Table> */}
+        <tbody>
+          {companies.map((company, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{company.company_name}</td>
+              <td>{company.title}</td>
+              <td>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => removeFromFavorite(index)}
+                >
+                  <BsFillTrashFill />
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </Container>
   );
 };
 
-export default connect(mapStateToProps)(FavoriteCompany);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteCompany);
