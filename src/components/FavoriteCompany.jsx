@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => ({
   removeFromFavorite: (index) => dispatch(removeCompanyFromFavorite(index)),
 });
 
-const FavoriteCompany = ({ companies }) => {
+const FavoriteCompany = ({ companies, removeFromFavorite }) => {
   console.log(companies);
   return (
     <Container fluid className="p-3">

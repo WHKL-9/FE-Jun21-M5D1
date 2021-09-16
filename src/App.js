@@ -12,33 +12,40 @@ import { useState, useEffect } from "react";
 import HomePage from "./components/HomePage";
 import Company from "./components/Company";
 import SearchedJobs from "./components/SearchedJobs";
-import  FavoriteCompany  from "./components/FavoriteCompany";
+import FavoriteCompany from "./components/FavoriteCompany";
+import { fillSearchResults } from "./actions";
+import { connect } from "react-redux";
 
-function App() {
-  const [userInput, setUserInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  fetchResults: (search) => dispatch(fillSearchResults(search)),
+});
 
-  const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?search=";
+const App = ({ fetchResults }) => {
+  // const [userInput, setUserInput] = useState("");
+  // const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchInput = async (event) => {
-    if (event) {
-      event.preventDefault();
-    }
-    try {
-      const response = await fetch(endpoint + userInput);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setSearchResults(data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?search=";
 
-  useEffect(() => {
-    handleSearchInput();
-  }, []);
+  // const handleSearchInput = async (event) => {
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
+  //   try {
+  //     const response = await fetch(endpoint + userInput);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setSearchResults(data.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleSearchInput();
+  // }, []);
 
   return (
     <Router>
@@ -51,17 +58,21 @@ function App() {
             <Nav.Link href="#features">Company</Nav.Link>
           </Link>{" "}
         </Nav>
-        <Form onSubmit={handleSearchInput} className="d-flex flex-row">
+        <Form className="d-flex flex-row">
           <FormControl
             type="text"
             placeholder="Tell us your dream job"
             className="mr-sm-2"
-            onChange={(e) =>
-              setUserInput(e.target.value, console.log(userInput))
-            }
+            onChange={(e) => {
+              if (e.target.value.length> 3){
+                fetchResults(e.target.value)
+              }
+            }}
           />
-          <Link to={`/jobs/${userInput}`}>
-            <Button variant="outline-primary">Search</Button>
+          <Link to={`/jobs/`}>
+            <Button variant="outline-primary" type="button">
+              Search
+            </Button>
           </Link>
         </Form>
       </Navbar>
@@ -73,13 +84,13 @@ function App() {
           render={(routerProps) => <HomePage {...routerProps} />}
         />
         <Route
-          path={`/jobs/:${userInput}`}
+          path={`/jobs/`}
           exact
           render={(routerProps) => (
             <SearchedJobs
               {...routerProps}
-              searchResults={searchResults}
-              userInput={userInput}
+              // searchResults={searchResults}
+              // userInput={userInput}
             />
           )}
         />
@@ -89,11 +100,7 @@ function App() {
         <Route
           path="/Company"
           exact
-          render={(routerProps) => (
-            <Company
-              {...routerProps}
-            />
-          )}
+          render={(routerProps) => <Company {...routerProps} />}
         />
         <Route
           path="/FavoriteCompany"
@@ -103,6 +110,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
