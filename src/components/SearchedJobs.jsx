@@ -1,12 +1,18 @@
 import { Table, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {connect} from "react-redux";
+const mapStateToProps = state => ({
+  results: state.search.results.data,
+  loading: state.search.loading,
+  error: state.search.error,
+})
 
-const SearchJobs = ({ searchResults, userInput }) => {
+
+const SearchJobs = ({results}) => {
   // console.log("I am the results:", searchResults);
 
   return (
     <Container fluid className="p-3">
-      <h4>Search Results for: {userInput}</h4>
+      <h4>Search Results: </h4>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -16,9 +22,9 @@ const SearchJobs = ({ searchResults, userInput }) => {
           </tr>
         </thead>
         <tbody>
-          {searchResults.slice(-25).map((result, index) => {
+          {results.slice(-25).map((result, index) => {
             return (
-              <tr key={index + 1}>
+              <tr key={result._id}>
                 <td>{index + 1}</td>
                 <td>{result.company_name}</td>
                 <td>{result.title}</td>
@@ -27,9 +33,8 @@ const SearchJobs = ({ searchResults, userInput }) => {
           })}
         </tbody>
       </Table>
-
     </Container>
   );
 };
 
-export default SearchJobs;
+export default connect(mapStateToProps)(SearchJobs);
