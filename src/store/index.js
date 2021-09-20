@@ -2,6 +2,9 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import favoriteReducer from "../reducers/favorite";
 import searchReducer from "../reducers/search";
 import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { encryptTransform } from "redux-persist-transform-encrypt";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
@@ -13,6 +16,18 @@ export const initialState = {
   search: {
     results: [],
   },
+  loading: false,
+};
+
+// persistConfig takes in 2 arg
+const persistConfig = {
+  key: "root",
+  storage,
+  transforms: [
+    encryptTransform({
+      secretKey: process.env.REACT_APP_MY_SECRET_KEY
+    })
+  ]
 };
 
 const bigReducer = combineReducers({
@@ -20,12 +35,17 @@ const bigReducer = combineReducers({
   search: searchReducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, bigReducer);
+
 // 3 arguments for createStore:
 // 1) primary reducer
 // 2) initial state of the app
 // 3) middlewares/plugins
 export const configureStore = createStore(
-  bigReducer,
+  persistedReducer,
   initialState,
   composeEnhancers(applyMiddleware(thunk))
 );
+
+// ! dont forget
+export const persistor = persistStore(configureStore);

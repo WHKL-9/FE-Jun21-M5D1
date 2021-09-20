@@ -22,30 +22,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const App = ({ fetchResults }) => {
-  // const [userInput, setUserInput] = useState("");
-  // const [searchResults, setSearchResults] = useState([]);
-
-  // const endpoint = "https://strive-jobs-api.herokuapp.com/jobs?search=";
-
-  // const handleSearchInput = async (event) => {
-  //   if (event) {
-  //     event.preventDefault();
-  //   }
-  //   try {
-  //     const response = await fetch(endpoint + userInput);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log(data);
-  //       setSearchResults(data.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleSearchInput();
-  // }, []);
 
   return (
     <Router>
