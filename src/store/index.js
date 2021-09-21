@@ -15,8 +15,9 @@ export const initialState = {
   },
   search: {
     results: [],
+    loading: true,
+    error: false,
   },
-  loading: false,
 };
 
 // persistConfig takes in 2 arg

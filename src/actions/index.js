@@ -12,7 +12,7 @@ export const fillSearchResults = (searchString) => {
   return async (dispatch, getState) => {
     const baseUrl = "https://strive-jobs-api.herokuapp.com/jobs?search=";
     try {
-      let response = await fetch(baseUrl + searchString);
+      let response = await fetch(baseUrl + searchString );
       if (response.ok) {
         let data = await response.json();
         setTimeout(() => {
