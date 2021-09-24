@@ -9,7 +9,7 @@ export const removeCompanyFromFavorite = (index) => ({
 });
 
 export const fillSearchResults = (searchString) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const baseUrl = "https://strive-jobs-api.herokuapp.com/jobs?search=";
     try {
       let response = await fetch(baseUrl + searchString );
