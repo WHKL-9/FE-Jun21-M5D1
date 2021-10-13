@@ -32,7 +32,7 @@ const Company = () => {
   }, []);
 
   return (
-    <Container fluid className="mt-5">
+    <Container fluid className="mt-5 p-5">
       <Row>
         <Col xs={12} sm={8} md={4}></Col>
         <Col xs={12} sm={8} md={4}>

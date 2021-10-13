@@ -29,7 +29,7 @@ const CompanyResult = ({
           </tr>
         </thead>
         <tbody>
-          {companyResult.slice(-25).map((result, index) => {
+          {companyResult && companyResult.slice(-25).map((result, index) => {
             let isFavorite = favorite.companies.includes(result);
             return (
               <tr key={index + 1}>

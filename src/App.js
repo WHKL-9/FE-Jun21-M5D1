@@ -15,6 +15,8 @@ import SearchedJobs from "./components/SearchedJobs";
 import FavoriteCompany from "./components/FavoriteCompany";
 import { fillSearchResults } from "./actions";
 import { connect } from "react-redux";
+import SearchResults from "./components/SearchResults";
+import { useHistory } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
@@ -22,6 +24,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const App = ({ fetchResults }) => {
+  const history = useHistory();
+
+  const handleRoute = () => {
+    history.push("/jobs");
+  };
 
   return (
     <Router>
@@ -34,17 +41,20 @@ const App = ({ fetchResults }) => {
             <Nav.Link href="#features">Company</Nav.Link>
           </Link>{" "}
         </Nav>
-        <Form className="d-flex flex-row">
+        <Form className="d-flex flex-column">
           <FormControl
             type="text"
             placeholder="Tell us your dream job"
             className="mr-sm-2"
             onChange={(e) => {
-              if (e.target.value.length> 3){
-                fetchResults(e.target.value)
+              if (e.target.value.length > 3) {
+                fetchResults(e.target.value);
               }
             }}
+            onEnter={handleRoute}
           />
+          <SearchResults />
+
           <Link to={`/jobs/`}>
             <Button variant="outline-primary" type="button">
               Search
@@ -60,7 +70,7 @@ const App = ({ fetchResults }) => {
           render={(routerProps) => <HomePage {...routerProps} />}
         />
         <Route
-          path={`/jobs/`}
+          path={`/jobs`}
           exact
           render={(routerProps) => (
             <SearchedJobs
